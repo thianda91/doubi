@@ -5,12 +5,11 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: DAZE
-#	Version: 1.0.1
+#	Version: 1.0.2
 #	Author: Toyo
-#	Blog: https://doub.io/daze-jc3/
 #=================================================
 
-sh_ver="1.0.1"
+sh_ver="1.0.2"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 Folder="/usr/local/daze"
@@ -108,9 +107,10 @@ Download(){
 	else
 		bit="arm"
 	fi
-	wget --no-check-certificate -N "https://github.com/mohanson/daze/releases/download/${new_ver}/daze_linux_${bit}"
+	wget --no-check-certificate -N "https://github.com/mohanson/daze/releases/download/${new_ver}/daze_linux_${bit}.zip"
 	[[ ! -e "daze_linux_${bit}" ]] && echo -e "${Error} DAZE 下载失败 !" && rm -rf "${Folder}" && exit 1
-	mv "daze_linux_${bit}" "daze"
+	unzip  "daze_linux_${bit}.zip"
+    mv "daze_linux_${bit}/daze" "daze"
 	[[ ! -e "daze" ]] && echo -e "${Error} DAZE 重命名失败 !" && rm -rf "${Folder}" && exit 1
 	chmod +x daze
 	echo "${new_ver}" > ${Now_ver_File}
